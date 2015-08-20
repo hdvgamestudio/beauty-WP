@@ -6,7 +6,7 @@ using Windows.UI.Xaml;
 
 namespace CSMen.BeautySocial.Util
 {
-    public class FacebookAuthencation
+    public class FacebookAuthentication
     {
         public class LoginParameter
         {

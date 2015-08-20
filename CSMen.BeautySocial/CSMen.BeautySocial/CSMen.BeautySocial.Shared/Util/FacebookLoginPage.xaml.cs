@@ -31,7 +31,7 @@ namespace CSMen.BeautySocial.Util
         public const string loginFacebookUrlTemplate = "https://www.facebook.com/dialog/oauth?client_id={0}&display=popup&response_type=token&redirect_uri={1}";
         public const string callbackUrl = "https://www.facebook.com/connect/login_success.html";
 #endif
-        private FacebookAuthencation.LoginParameter m_LoginParameter;
+        private FacebookAuthentication.LoginParameter m_LoginParameter;
         private bool m_IsCancelled = true;
 
         public FacebookLoginPage()
@@ -48,7 +48,7 @@ namespace CSMen.BeautySocial.Util
         {
             base.OnNavigatedTo(e);
 
-            this.m_LoginParameter = e.Parameter as FacebookAuthencation.LoginParameter;
+            this.m_LoginParameter = e.Parameter as FacebookAuthentication.LoginParameter;
 
             var loginUrl = CreateLoginUrl(m_LoginParameter.AppId);
 

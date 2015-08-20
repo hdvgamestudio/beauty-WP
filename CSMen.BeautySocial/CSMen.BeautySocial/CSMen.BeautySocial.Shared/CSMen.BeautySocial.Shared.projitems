@@ -16,17 +16,21 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Constants\Configuration.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Util\FacebookAuthencation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\BeautyApiRespone.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\FacebookAccount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Util\BeautyApiRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Util\FacebookAuthentication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\FacebookLoginPage.xaml.cs">
       <DependentUpon>FacebookLoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Util\FacebookRequestError.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\FacebookSdk.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Util\GraphRespone.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\NavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\UriHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\AccountViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Model\" />
-    <Folder Include="$(MSBuildThisFileDirectory)ViewModel\" />
     <Folder Include="$(MSBuildThisFileDirectory)View\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using CSMen.BeautySocial.Constants;
 using CSMen.BeautySocial.Util;
+using CSMen.BeautySocial.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,13 +42,10 @@ namespace CSMen.BeautySocial
         {
         }
 
-        private async void OnLoginFacebookClick(object sender, RoutedEventArgs e)
+        private void OnLoginFacebookClick(object sender, RoutedEventArgs e)
         {
-            var facebookAuthentication = new FacebookAuthencation();
-            string accessToken = await facebookAuthentication.LoginAsync(Configuration.facebookAppId);
-
-            var dialog = new MessageDialog(accessToken, "Access Token");
-            await dialog.ShowAsync();
+            AccountViewModel accountViewModel = new AccountViewModel();
+            accountViewModel.LoginAsFacebook();
         }
     }
 }
