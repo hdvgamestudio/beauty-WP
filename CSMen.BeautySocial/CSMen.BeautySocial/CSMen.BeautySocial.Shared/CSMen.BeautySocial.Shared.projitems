@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>d0d1579d-24a1-4c1a-bdf9-085cb1ff90e6</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>CSMen.BeautySocial</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Constants\Configuration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\BeautyApiException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\BeautyApiRespone.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\BeautyUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\DeviceInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\FacebookAccount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Gender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\UserType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Util\BeautyApiRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Util\FacebookAuthentication.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Util\FacebookLoginPage.xaml.cs">
+      <DependentUpon>FacebookLoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Util\FacebookRequestError.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Util\FacebookSdk.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Util\GraphRespone.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Util\NavigationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Util\UriHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\AccountViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\BeautySDK.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)View\Controls\" />
+    <Folder Include="$(MSBuildThisFileDirectory)View\Pages\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Util\FacebookLoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+</Project>
