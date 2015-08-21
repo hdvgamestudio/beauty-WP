@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -66,8 +67,9 @@ namespace CSMen.BeautySocial.Util
         private void OnNavigationFailed(object sender, WebViewNavigationFailedEventArgs e)
         {
             string absolutePath = e.Uri.ToString();
+           
+            m_LoginParameter.Tcs.SetException(new WebException());
             
-            m_LoginParameter.Tcs.SetException(new Exception("Navigation Failed"));
             this.m_IsCancelled = false;
 
             System.Diagnostics.Debug.WriteLine("Navigation Failed: {0}", absolutePath);

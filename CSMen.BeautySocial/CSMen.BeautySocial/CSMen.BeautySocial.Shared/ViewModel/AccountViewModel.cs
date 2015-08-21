@@ -4,13 +4,14 @@ using CSMen.BeautySocial.Util;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Windows.Web.Http;
 
 namespace CSMen.BeautySocial.ViewModel
 {
     public class AccountViewModel
     {
-        public async void LoginAsFacebook()
+        public async Task LoginAsFacebook()
         {
             FacebookAuthentication facebookAuthentication = new FacebookAuthentication();
             var accessToken = await facebookAuthentication.LoginAsync(Configuration.facebookAppId);
@@ -22,11 +23,18 @@ namespace CSMen.BeautySocial.ViewModel
 
             FacebookAccount facebookAccount = respone.SingleData.ToObject<FacebookAccount>();
 
-            string json = "{\"user\": {\"name\": \"ngocnv\",\"email\": \"nguyenngoc101@yahoo.com\",\"account_type\": \"facebook\",\"uid\": \"xxxxxxxxx\",\"access_token\": \"xxxxxxxxxxxxxx\",\"oss_attributes\": [{\"device_token\": \"xxxxxxx\", \"type\": \"Ios\"}]}}";
-            BeautyApiRequest requestFacebookLogin = new BeautyApiRequest("users", HttpMethod.Post);
-            requestFacebookLogin.SetStringBody(json);
 
-            var respone1 = await requestFacebookLogin.ExecuteAsync();
+            BeautyUser user = new BeautyUser
+            {
+                UserType = UserType.facebook,
+                Id = facebookAccount.FacebookId,
+                FacebookAccessToken = accessToken,
+                Name = facebookAccount.FacebookName,
+                Email = facebookAccount.Email
+            };
+
+            BeautySDK beautySdk = new BeautySDK();
+            await beautySdk.CreateUserAsync(user);
         }
     }
 }

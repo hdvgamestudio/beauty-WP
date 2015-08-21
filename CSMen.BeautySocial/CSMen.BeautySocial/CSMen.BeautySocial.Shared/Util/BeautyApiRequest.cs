@@ -1,5 +1,7 @@
 ﻿using CSMen.BeautySocial.Constants;
 using CSMen.BeautySocial.Model;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,10 +14,46 @@ namespace CSMen.BeautySocial.Util
 {
     public class BeautyApiRequest
     {
+        private enum RequestBodyType : int
+        {
+            JsonBody = 0,
+        }
+
+        private class RequestBody
+        {
+            public RequestBodyType BodyType
+            {
+                set;
+                get;
+            }
+
+            public string ContentType
+            {
+                get
+                {
+                    string contentType = string.Empty;
+                    switch (BodyType)
+                    {
+                        case RequestBodyType.JsonBody:
+                            contentType = "application/json";
+                            break;
+                    }
+
+                    return contentType;
+                }
+            }
+
+            public byte[] BodyData
+            {
+                set;
+                get;
+            }
+        }
+
         private string m_Path;
         private Dictionary<string, string> m_Parameters;
         private HttpMethod m_Method;
-        private byte[] m_Body;
+        private RequestBody m_Body;
         public BeautyApiRequest()
         {
             this.m_Parameters = new Dictionary<string, string>();
@@ -37,23 +75,52 @@ namespace CSMen.BeautySocial.Util
 
         public async Task<BeautyApiRespone> ExecuteAsync()
         {
-            HttpWebRequest httpWebRequest = HttpWebRequest.CreateHttp(RequestUrl);
-            httpWebRequest.Method = m_Method.Method;
-            if (m_Body != null && m_Body.Length > 0)
+            BeautyApiRespone beautyRespone = new BeautyApiRespone();
+
+            try
             {
-                httpWebRequest.ContentType = "application/json";
-                using (var requestStream = await httpWebRequest.GetRequestStreamAsync())
+                HttpWebRequest httpWebRequest = HttpWebRequest.CreateHttp(RequestUrl);
+                httpWebRequest.Method = m_Method.Method;
+                if (m_Body != null)
                 {
-                    await requestStream.WriteAsync(m_Body, 0, m_Body.Length);
+                    httpWebRequest.ContentType = m_Body.ContentType;
+                    byte[] bodyData = m_Body.BodyData;
+
+                    using (var requestStream = await httpWebRequest.GetRequestStreamAsync())
+                    {
+                        await requestStream.WriteAsync(bodyData, 0, bodyData.Length);
+                    }
+                }
+
+                var httpRespone = await httpWebRequest.GetResponseAsync();
+                using (var streamReader = new StreamReader(httpRespone.GetResponseStream()))
+                {
+                    string jsonString = await streamReader.ReadToEndAsync();
+                    beautyRespone.Data = JsonConvert.DeserializeObject<JToken>(jsonString);
                 }
             }
-
-            var httpRespone = await httpWebRequest.GetResponseAsync();
-            using (var streamReader = new StreamReader(httpRespone.GetResponseStream()))
+            catch (WebException webException)
             {
-                string jsonString = await streamReader.ReadToEndAsync();
+                var respone = webException.Response;
+                using (var errorStreamReader = new StreamReader(respone.GetResponseStream()))
+                {
+                    var errorString = errorStreamReader.ReadToEnd();
+                    if (string.IsNullOrEmpty(errorString))
+                    {
+                        throw;
+                    }
+
+                    BeautyApiException beautyException = JsonConvert.DeserializeObject<BeautyApiException>(errorString);
+                    beautyException.WebException = webException;
+                    throw beautyException;
+                }
+            } 
+            catch (Exception otherException)
+            {
+                throw;
             }
-            return null;
+
+            return beautyRespone;
         }
 
         public string Path
@@ -73,9 +140,40 @@ namespace CSMen.BeautySocial.Util
             m_Parameters.Add(key, value);
         }
 
-        public void SetStringBody(string body)
+        public bool RemoveParameter(string key)
         {
-            this.m_Body = UTF8Encoding.UTF8.GetBytes(body);
+            if (!m_Parameters.ContainsKey(key))
+                return false;
+
+            m_Parameters.Remove(key);
+
+            return true;
+        }
+
+        public void SetJsonBody(string jsonBody)
+        {
+            RequestBody body = new RequestBody
+            {
+                BodyType = RequestBodyType.JsonBody,
+                BodyData = Encoding.UTF8.GetBytes(jsonBody)
+            };
+
+            this.m_Body = body;
+        }
+
+        public void SetJsonBody(JToken jsonToken)
+        {
+            SetJsonBody(jsonToken.ToString());
+        }
+
+        public void SetJsonBody(object jsonObject)
+        {
+            SetJsonBody(JsonConvert.SerializeObject(jsonObject));
+        }
+
+        public void ClearBody()
+        {
+            this.m_Body = null;
         }
 
         public string RequestUrl

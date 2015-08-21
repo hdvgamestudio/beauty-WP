@@ -7,6 +7,10 @@ namespace CSMen.BeautySocial.Model
 {
     public class BeautyApiRespone
     {
-        
+        public JToken Data
+        {
+            set;
+            get;
+        }
     }
 }

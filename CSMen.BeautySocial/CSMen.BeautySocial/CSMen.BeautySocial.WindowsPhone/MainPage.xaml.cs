@@ -1,4 +1,5 @@
 ﻿using CSMen.BeautySocial.Constants;
+using CSMen.BeautySocial.Model;
 using CSMen.BeautySocial.Util;
 using CSMen.BeautySocial.ViewModel;
 using System;
@@ -42,10 +43,17 @@ namespace CSMen.BeautySocial
         {
         }
 
-        private void OnLoginFacebookClick(object sender, RoutedEventArgs e)
+        private async void OnLoginFacebookClick(object sender, RoutedEventArgs e)
         {
-            AccountViewModel accountViewModel = new AccountViewModel();
-            accountViewModel.LoginAsFacebook();
+            try
+            {
+                AccountViewModel accountViewModel = new AccountViewModel();
+                await accountViewModel.LoginAsFacebook();
+            }
+            catch (BeautyApiException beautyException)
+            {
+                
+            }
         }
     }
 }

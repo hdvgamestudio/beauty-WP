@@ -21,6 +21,7 @@ namespace CSMen.BeautySocial.Model
             get;
         }
 
+        [JsonProperty("email")]
         public string Email
         {
             set;

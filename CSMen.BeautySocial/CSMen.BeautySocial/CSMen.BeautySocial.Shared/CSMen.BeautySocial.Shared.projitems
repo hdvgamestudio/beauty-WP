@@ -16,8 +16,13 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Constants\Configuration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\BeautyApiException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BeautyApiRespone.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\BeautyUser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\DeviceInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\FacebookAccount.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\Gender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\UserType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\BeautyApiRequest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\FacebookAuthentication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\FacebookLoginPage.xaml.cs">
@@ -29,9 +34,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Util\NavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\UriHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\AccountViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\BeautySDK.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)View\" />
+    <Folder Include="$(MSBuildThisFileDirectory)View\Controls\" />
+    <Folder Include="$(MSBuildThisFileDirectory)View\Pages\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Util\FacebookLoginPage.xaml">
